@@ -1,0 +1,37 @@
+plugins {
+    id "java"
+    id "com.diffplug.spotless" version "6.23.3"
+}
+
+// configure the spotless to use the Google Java Format
+spotless {
+    java {
+        googleJavaFormat('1.18.1')
+    }
+    // enable to check the format during ./gradlew check
+    enforceCheck = false
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+configurations.all {
+    resolutionStrategy {
+        // fail eagerly on version conflict (includes transitive dependencies)
+        // e.g. multiple different versions of the same dependency (group and name are equal)
+        failOnVersionConflict()
+    }
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
